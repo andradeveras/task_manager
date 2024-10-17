@@ -1,10 +1,24 @@
-<table>
+<header>
+  <h1>Welcome to Your App!</h1>
+
+  <% if session[:jwt_token] %>
+    <%= button_to 'Logout', logout_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' }, class: 'btn btn-danger' %>
+  <% end %>
+</header>
+
+<!-- Link to create a new task -->
+<div class="new-task-link">
+  <%= link_to 'New Task', new_task_path, class: 'btn btn-primary' %>
+</div>
+
+<!-- Task table -->
+<table class="table">
   <thead>
     <tr>
       <th>Title</th>
       <th>Status</th>
-      <th>Url</th>
-      <th colspan="3"></th>
+      <th>URL</th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
@@ -13,10 +27,10 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.status.humanize %></td>
-        <td><%= task.url %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to task.url, task.url, target: '_blank' %></td>
+        <td><%= link_to 'Show', task, class: 'btn btn-info' %></td>
+        <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning' %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
